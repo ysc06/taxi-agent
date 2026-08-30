@@ -1,0 +1,47 @@
+[
+  {
+    "env_name": "test_env_1",
+    "total_reward": 17.745278512572007,
+    "num_steps": 9,
+    "terminated": true,
+    "truncated": false,
+    "reached_goal": true,
+    "image_path": "/Users/yushancheng06/Desktop/UIUC/CS 440 Artificial Intelligence /MPs/MP5/template/results/run_2/test_env_1_path.png"
+  },
+  {
+    "env_name": "test_env_2",
+    "total_reward": 17.499746829177155,
+    "num_steps": 12,
+    "terminated": true,
+    "truncated": false,
+    "reached_goal": true,
+    "image_path": "/Users/yushancheng06/Desktop/UIUC/CS 440 Artificial Intelligence /MPs/MP5/template/results/run_2/test_env_2_path.png"
+  },
+  {
+    "env_name": "test_env_3",
+    "total_reward": 17.688096967135213,
+    "num_steps": 25,
+    "terminated": true,
+    "truncated": false,
+    "reached_goal": true,
+    "image_path": "/Users/yushancheng06/Desktop/UIUC/CS 440 Artificial Intelligence /MPs/MP5/template/results/run_2/test_env_3_path.png"
+  },
+  {
+    "env_name": "test_env_4",
+    "total_reward": -27.90437624957967,
+    "num_steps": 4,
+    "terminated": true,
+    "truncated": false,
+    "reached_goal": false,
+    "image_path": "/Users/yushancheng06/Desktop/UIUC/CS 440 Artificial Intelligence /MPs/MP5/template/results/run_2/test_env_4_path.png"
+  },
+  {
+    "env_name": "test_env_5",
+    "total_reward": -29.0204717676669,
+    "num_steps": 2,
+    "terminated": true,
+    "truncated": false,
+    "reached_goal": false,
+    "image_path": "/Users/yushancheng06/Desktop/UIUC/CS 440 Artificial Intelligence /MPs/MP5/template/results/run_2/test_env_5_path.png"
+  }
+]

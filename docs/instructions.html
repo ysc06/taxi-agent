@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>instructions</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css" />
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<h1 id="cs440-online-spring-2026-mp-5-reinforcement-learning">CS440
+Online Spring 2026, MP 5: Reinforcement Learning</h1>
+<h2 id="due-sunday-april-19th-1159pm">Due: Sunday, April 19th,
+11:59pm</h2>
+<h2 id="i.-overview">I. Overview</h2>
+<p>In this MP you will implement:</p>
+<ol type="1">
+<li>Tabular Q-learning for a small discrete environment</li>
+<li>A linear DQN agent for a Dubins car environment</li>
+</ol>
+<p>As in the earlier MPs, a lot of code is already provided for you.
+Your job is to fill in the missing learning logic and, for the Dubins
+car part, design a useful hand-crafted feature representation.</p>
+<h2 id="ii.-getting-started">II. Getting Started</h2>
+<p>Look inside the <code>template/</code> directory for the starter
+code. You will find:</p>
+<p>Dependencies (namely <code>gymnasium</code> is the new one) to be
+installed:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code></pre></div>
+<p>Files relevant to Part III:</p>
+<ul>
+<li><code>tabular_q_learning.py</code> - you will edit and submit
+this</li>
+</ul>
+<p>Files relevant to Part IV:</p>
+<ul>
+<li><code>linear_dqn.py</code> - you will edit and submit this</li>
+<li><code>gym_robot.py</code> - you will edit and submit this</li>
+<li><code>cspace.py</code> - no need to copy from MP3, we provide it for
+you</li>
+<li><code>robot.py</code> - no need to copy from MP3, we provide it for
+you</li>
+<li><code>data/</code> - here you will define JSON files for training
+your Linear DQN agent, we provide a small test set to get you
+started</li>
+</ul>
+<p>Please submit:</p>
+<ul>
+<li><code>tabular_q_learning.py</code></li>
+<li><code>gym_robot.py</code></li>
+<li><code>linear_dqn.py</code></li>
+<li><code>QAgent_weights.npy</code> - trained Q-table for the Taxi
+environment</li>
+<li><code>linear_dqn_weights.npy</code> - trained weight matrix for the
+linear DQN agent</li>
+</ul>
+<h2 id="iii.-tabular-q-learning-50-points">III. Tabular Q Learning (50
+points)</h2>
+<p>In this part you will implement tabular Q-learning for the <a
+href="https://gymnasium.farama.org/environments/toy_text/taxi/">Gymnasium
+Taxi-v3 environment</a>.</p>
+<p>You will find <code>TODO(III)</code> markers in
+<code>tabular_q_learning.py</code>. The main tasks are:</p>
+<ul>
+<li>initialize the Q-table</li>
+<li>implement epsilon-greedy action selection</li>
+<li>implement the Q-learning update</li>
+<li>implement the training loop</li>
+<li>optionally implement a separate greedy evaluation helper</li>
+</ul>
+<p>You will be graded on:</p>
+<ul>
+<li>the correctness of <code>QAgent.update(...)</code></li>
+<li>the performance of the learned policy stored in
+<code>QAgent_weights.npy</code></li>
+</ul>
+<p>That means you are free to tune hyperparameters such as
+<code>alpha</code>, <code>gamma</code>, <code>epsilon</code>, and
+<code>init_val</code>.</p>
+<p>To run the code in this part you will need to directly modify the
+<code>main</code> block in <code>tabular_q_learning.py</code> to call
+your training and evaluation functions. We provide an example of how to
+set up your experiments but you are free to (and should) modify it as
+you see fit. You can also add additional helper functions and classes as
+needed.</p>
+<h3 id="the-taxi-environment">The Taxi Environment</h3>
+<figure align="center">
+<img src="taxi_env_rgb.png" width="500">
+<figcaption align="center">
+<b>Taxi-v3 example render with the taxi near the center of the map, the
+passenger at <code>R</code> (the red tile), and the destination at
+<code>G</code> (the green tile). </b>
+</figcaption>
+</figure>
+<p>We highly recommend that you read through the official Taxi
+environment documentation to understand the details of the environment.
+Here we provide a brief summary.</p>
+<p>Taxi-v3 is a small gridworld in which a taxi must:</p>
+<ol type="1">
+<li>drive to the passenger,</li>
+<li>pick the passenger up,</li>
+<li>drive to the passenger’s destination, and</li>
+<li>drop the passenger off.</li>
+</ol>
+<p>The environment is small enough that a simple tabular method works
+very well.</p>
+<p>The image above can be rendered using <code>env.render()</code> after
+you create the environment with <code>render_mode="rgb_array"</code>.
+For simpler debugging in terminal the environment also supports an ASCII
+render that looks something like:</p>
+<pre class="text"><code>+---------+
+|R: | : :G|
+| : | : : |
+| : : T : |
+| | : | : |
+|Y| : |B: |
++---------+</code></pre>
+<h3 id="spaces-actions-rewards-and-episodes">Spaces, Actions, Rewards,
+and Episodes</h3>
+<p>Each Gym environment provides</p>
+<ul>
+<li><code>env.observation_space</code></li>
+<li><code>env.action_space</code></li>
+</ul>
+<p>For Taxi-v3:</p>
+<ul>
+<li>observation space: <code>Discrete(500)</code>
+<ul>
+<li><code>env.observation_space.n == 500</code></li>
+</ul></li>
+<li>action space: <code>Discrete(6)</code>
+<ul>
+<li><code>env.action_space.n == 6</code></li>
+</ul></li>
+</ul>
+<p>The six actions are:</p>
+<ul>
+<li><code>0</code>: move south</li>
+<li><code>1</code>: move north</li>
+<li><code>2</code>: move east</li>
+<li><code>3</code>: move west</li>
+<li><code>4</code>: pick up passenger</li>
+<li><code>5</code>: drop off passenger</li>
+</ul>
+<p>Reward structure:</p>
+<ul>
+<li><code>-1</code> for a normal step</li>
+<li><code>+20</code> for a successful drop-off</li>
+<li><code>-10</code> for illegal pickup/drop-off actions</li>
+</ul>
+<p>Episode end conditions:</p>
+<ul>
+<li><code>terminated=True</code> when the passenger is successfully
+dropped off</li>
+<li><code>truncated=True</code> if the environment time limit is
+reached</li>
+</ul>
+<p>When training, stop an episode when:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>done <span class="op">=</span> terminated <span class="kw">or</span> truncated</span></code></pre></div>
+<p>but when updating the Q-table, only use <code>terminated</code> to
+determine whether to bootstrap or only use the current rewards.</p>
+<h3 id="what-the-observation-means">What the Observation Means</h3>
+<p>The Taxi observation is a single integer state id. You do not need to
+decode it into a specific state of the world since for tabular
+Q-learning we can use it directly as the row index into your
+Q-table.</p>
+<h3 id="the-gym-api">The Gym API</h3>
+<p>The basic loop is:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>state, info <span class="op">=</span> env.reset()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>next_state, reward, terminated, truncated, info <span class="op">=</span> env.step(action)</span></code></pre></div>
+<p>The official Taxi docs mention action masking in <code>info</code>.
+Feel free to play around with it, though it is not required for this
+assignment.</p>
+<h3 id="what-to-implement-in-tabular_q_learning.py">What to Implement in
+<code>tabular_q_learning.py</code></h3>
+<h4 id="qagent.__init__...">1. <code>QAgent.__init__(...)</code></h4>
+<p>Initialize <code>self.q_table</code> as a NumPy array with:</p>
+<ul>
+<li>shape <code>[n_states, n_actions]</code></li>
+<li>dtype <code>float</code></li>
+<li>all values set to <code>init_val</code></li>
+</ul>
+<h4 id="qagent.actstate-epsilon0.0">2.
+<code>QAgent.act(state, epsilon=0.0)</code></h4>
+<p>Implement epsilon-greedy action selection:</p>
+<ul>
+<li>with probability <code>epsilon</code>, choose a random action</li>
+<li>otherwise choose the best action according to the Q_table, breaking
+ties with the first occurrence of the maximum value
+(i.e. <code>np.argmax</code> behavior)</li>
+</ul>
+<h4 id="qagent.update...">3. <code>QAgent.update(...)</code></h4>
+<p>Implement the standard Q-learning update:</p>
+<pre class="text"><code>target = reward                              if terminal
+target = reward + gamma * max_a&#39; Q(s&#39;, a&#39;)   otherwise
+
+Q(s, a) &lt;- Q(s, a) + alpha * (target - Q(s, a))</code></pre>
+<p>This is the part of Part III that is graded directly for
+correctness.</p>
+<h4 id="train_agent...">4. <code>train_agent(...)</code></h4>
+<p>Implement the training loop over episodes:</p>
+<ol type="1">
+<li>reset the environment</li>
+<li>pick an action using epsilon-greedy exploration</li>
+<li>call <code>env.step(action)</code></li>
+<li>update the Q-table</li>
+<li>accumulate reward</li>
+<li>stop when <code>terminated or truncated</code></li>
+</ol>
+<h4 id="eval_agent...">5. <code>eval_agent(...)</code></h4>
+<p>We recommend writing a separate greedy evaluation helper with
+<code>epsilon=0.0</code> since this is how we evaluate your final
+policy…</p>
+<h3 id="saved-weights">Saved Weights</h3>
+<p>Submit your best trained Q-table as a NumPy file named
+<code>QAgent_weights.npy</code> (the code currently saves to this by
+default).</p>
+<h2 id="iv.-linear-dqn-for-a-dubins-car-50-points">IV. Linear DQN for a
+Dubins Car (50 points)</h2>
+<p>In this part you will implement a linear function approximator for
+DQN in a Dubins car environment. <strong>Training can be slow</strong>
+because we are training an agent for many timesteps across many
+environments, in which each step requires collision checking. <strong>DO
+NOT wait until the last minute to start this part.</strong></p>
+<p>In MP4 you wrote linear models of the form: <span
+class="math display">\[y = X A\]</span></p>
+<p>Here you will again use a linear model, but now each action has its
+own weight vector: <span class="math display">\[ Q(s, a) = \phi(s)^T w_a
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(\phi(s)\)</span> is your hand-designed
+feature vector for state <span class="math inline">\(s\)</span></li>
+<li><span class="math inline">\(w_a\)</span> is the weight vector for
+action <span class="math inline">\(a\)</span></li>
+</ul>
+<p>Your job is to:</p>
+<ol type="1">
+<li>design <span class="math inline">\(\phi(s)\)</span> in
+<code>gym_robot.py</code></li>
+<li>implement the linear DQN code in <code>linear_dqn.py</code></li>
+<li>create your own <code>train_env_*.json</code> training
+environments</li>
+<li>train a policy and save <code>linear_dqn_weights.npy</code></li>
+</ol>
+<h3 id="environment-summary">Environment Summary</h3>
+<table align="center">
+<tr>
+<td align="center">
+<img src="dubins_visible_tests.png" width="420">
+</td>
+<td align="center">
+<img src="dubins_success_test_env_2.png" width="360">
+</td>
+</tr>
+<tr>
+<td align="center">
+<b>The 5 visible Dubins-car test environments provided for you. Notice
+that the actual heading of the goal is visualized but not relevant to
+the task. All that matters is the position of the goal and radius around
+it.</b>
+</td>
+<td align="center">
+<b>An example successful rollout on one of the provided visible test
+environments. The green disk shows the goal-tolerance region. Notice
+that the environment actions are stochastic and therefore even with the
+same policy we may get a different outcome.</b>
+</td>
+</tr>
+</table>
+<p>The underlying robot is a Dubins-style car with a fixed set of three
+controls and stochastic transitions (noise added to these controls):</p>
+<ul>
+<li>left turn</li>
+<li>straight</li>
+<li>right turn</li>
+</ul>
+<p>Each episode:</p>
+<ul>
+<li>starts from the <code>start</code> pose in the JSON file</li>
+<li>ends immediately on collision</li>
+<li>ends successfully when the car gets within
+<code>goal_tolerance</code> of the goal <strong>position</strong> (not
+configuration, meaning the final heading does not matter)</li>
+<li>truncates after <code>30</code> steps if the goal has not been
+reached</li>
+</ul>
+<p>When writing your training loop end an episode when
+<code>done = terminated or truncated</code> just like in the Taxi
+environment. And again, when computing the DQN target, only use
+<code>terminated</code> to decide whether to bootstrap from the next
+state.</p>
+<h3 id="what-you-need-to-implement">What You Need to Implement</h3>
+<h4 id="gym_robot.py">1. <code>gym_robot.py</code></h4>
+<p>The environment already handles:</p>
+<ul>
+<li>Dubins-car dynamics</li>
+<li>collision checking</li>
+<li>lidar ray casting</li>
+<li>rewards</li>
+<li>the fixed 3-action control set</li>
+</ul>
+<p>Your main responsibility in this file is the observation
+function:</p>
+<ul>
+<li>define a useful feature vector in
+<code>make_observation(...)</code></li>
+<li>use information such as the goal direction, goal distance, heading,
+and lidar distances</li>
+<li>return a <strong>1D NumPy array</strong> of numeric features</li>
+<li>keep the shape and dtype consistent across all calls to
+<code>make_observation(...)</code></li>
+</ul>
+<p>The <code>GymDubinsCar</code> class uses the very first observation
+returned by <code>reset()</code> to define
+<code>observation_space</code>, so consistency matters. If your first
+observation has a different shape from later observations, your training
+and evaluation code will break.</p>
+<p>Because the Q-function is linear, feature engineering matters a lot
+more here than it would in a deep-network implementation. Feel free to
+come up with any features you think might be useful, including
+interaction terms between simple features and nonlinear transformations
+of the raw information, or any other information you want to extract
+from the robot state and the environment</p>
+<h4 id="linear_dqn.py">2. <code>linear_dqn.py</code></h4>
+<p>Implement the linear DQN logic, including:</p>
+<ul>
+<li>weight initialization</li>
+<li>epsilon-greedy action selection</li>
+<li>replay buffer storage</li>
+<li>the DQN update using a target network and sampling from the replay
+buffer</li>
+<li>training and testing loops</li>
+</ul>
+<p>Some useful type/shape expectations:</p>
+<ul>
+<li>observations are 1D NumPy arrays of features</li>
+<li><code>self.weights</code> should be a 2D NumPy array of shape
+<code>[num_features, num_actions]</code></li>
+<li><code>act(...)</code> should return an integer action index in
+<code>[0, num_actions - 1]</code></li>
+</ul>
+<p>The core update is still the usual DQN target:</p>
+<pre class="text"><code>target = reward                                     if terminated
+target = reward + gamma * max_a&#39; Q_target(s&#39;, a&#39;)   otherwise</code></pre>
+<p>but now we will update the weights of our model using a step of
+gradient descent on the squared TD error. In other words, think of the
+target as the label and the current Q value as the prediction therefore
+the squared loss is:</p>
+<pre class="text"><code>td_error = (target - Q(s, a)) ** 2</code></pre>
+<p>which we can use to update the weights <code>w_a</code> for action
+<code>a</code>…</p>
+<h3 id="training-environments">Training Environments</h3>
+<p>You are expected to create your own training environments.</p>
+<p>Create files named:</p>
+<pre class="text"><code>data/train_env_1.json
+data/train_env_2.json
+...</code></pre>
+<p>The easiest workflow is:</p>
+<ol type="1">
+<li>copy one of the provided visible test JSON files</li>
+<li>change the <code>start</code>, <code>goal</code>, and obstacle
+layout</li>
+<li>remember to keep the robot and boundary parameters the same!</li>
+</ol>
+<p>None of our hidden tests are extremely challenging but they do
+require a reasonable amount of training and a good feature design to
+pass. We recommend starting with simple environments and then gradually
+increasing the difficulty as you iterate on your design.</p>
+<table align="center">
+<tr>
+<td align="center">
+<img src="dubins_lidar_example.png" width="360">
+</td>
+<td align="center">
+<img src="dubins_training_returns.png" width="420">
+</td>
+</tr>
+<tr>
+<td align="center">
+<b>An example lidar visualization showing the current robot pose, lidar
+rays, hit points, and the goal-tolerance region.</b>
+</td>
+<td align="center">
+<b>Example training return curve from a run in which the initial epsilon
+was decayed to 0.2 after 500 iterations and then held constant for the
+remaining iterations.</b>
+</td>
+</tr>
+</table>
+<h3 id="visible-and-hidden-test-environments">Visible and Hidden Test
+Environments</h3>
+<p>We provide <strong>5 visible test environments</strong> in
+<code>data/test_env_1.json</code> through
+<code>data/test_env_5.json</code>.</p>
+<p>The autograder uses:</p>
+<ul>
+<li>those same 5 visible test environments, and</li>
+<li>10 additional hidden test environments</li>
+</ul>
+<p>for a total of <strong>15</strong> test environments.</p>
+<p>To get full credit on the linear DQN portion, your submitted policy
+must pass <strong>at least 10 of the 15</strong> test environments.</p>
+<p>We strongly recommend that you do <strong>not</strong> train directly
+on the 5 visible test environments at first. Instead, treat them like a
+validation set while you iterate on:</p>
+<ul>
+<li>your feature design</li>
+<li>your training environments</li>
+<li>your hyperparameters</li>
+</ul>
+<p>Naturally once you’ve settled on a final design you should train on
+the visible test environments as well before submitting…</p>
+<h3 id="json-environment-format">JSON Environment Format</h3>
+<p>Each environment JSON contains:</p>
+<ul>
+<li><code>start</code>: initial robot configuration
+<code>[x, y, theta]</code></li>
+<li><code>goal</code>: goal configuration
+<code>[x, y, theta]</code></li>
+<li><code>obstacles</code>: workspace polygons</li>
+<li>robot geometry and motion parameters</li>
+<li>workspace boundary</li>
+</ul>
+<p>The goal check only uses the goal <strong>position</strong> and
+<code>goal_tolerance</code>, but the full <code>goal</code> pose is
+still stored in the JSON for visualization and consistency. You should
+not modify the robot parameters when making new training environments,
+only modify the <code>start</code>, <code>goal</code>, and
+<code>obstacles</code> fields.</p>
+<p>When you finish the assignment, if you want to play with a more
+difficult task you can add the goal heading into the reward structure in
+<code>gym_robot.py</code> and then use the full goal pose in your
+feature design as well.</p>
+<h3 id="suggested-feature-ideas">Suggested Feature Ideas</h3>
+<p>A good linear feature vector usually includes some combination
+of:</p>
+<ul>
+<li>distance to the goal</li>
+<li>whether the goal is in front of or behind the robot</li>
+<li>whether the goal is to the left or right of the current heading</li>
+<li>front / left / right clearance from lidar</li>
+<li>minimum obstacle clearance</li>
+<li>interaction terms such as “is there an obstacle within 1 meter in
+front of the robot AND is the goal in that direction?”</li>
+</ul>
+<p>There is no single required feature set. Part of the assignment is
+figuring out a reasonable one.</p>
+<h3 id="saved-weights-1">Saved Weights</h3>
+<p>The code runs each experiment in a new directory under
+<code>results/run_&lt;experiment_number&gt;</code>. It will save the
+weights as <code>linear_dqn_weights.npy</code> in that directory along
+with other details such as evaluation on your test environments.</p>
+<h2 id="submission-instructions">Submission Instructions</h2>
+<p>Submit:</p>
+<ul>
+<li><code>tabular_q_learning.py</code></li>
+<li><code>gym_robot.py</code></li>
+<li><code>linear_dqn.py</code></li>
+<li><code>QAgent_weights.npy</code></li>
+<li><code>linear_dqn_weights.npy</code></li>
+</ul>
+<p>Do not forget to access Gradescope from the Launch App button in
+Coursera so that your grade is automatically sync’d.</p>
+<h2 id="policies">Policies</h2>
+<p>You are expected to be familiar with the general course policies,
+including academic integrity. This is an individual assignment and the
+code you submit must be your own work.</p>
+</body>
+</html>
